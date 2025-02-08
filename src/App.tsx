@@ -3,12 +3,16 @@ import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import AuthContext from "./context/AuthContext";
 import { Container } from "@mui/material";
+// import { lazy } from "react";
+
+// import InitialHome from "./HOME_UI/home";
 import HomeLayout from "./layouts/default";
-import { lazy } from "react";
+import Home from "./HOME_UI/home";
 
 // Lazy Loading for components
-const Home = lazy(() => import("./components/views/home"));
-const Interview = lazy(() => import("./components/views/interview"));
+// import HomeLayout from "./layouts/default";
+// const Home = lazy(() => import("./components/views/home"));
+// const Interview = lazy(() => import("./components/views/interview"));
 // import Home from "./components/views/home";
 
 //Loading for fallback
@@ -21,12 +25,10 @@ function App() {
     <AuthContext>
       <Container>
         <Routes>
-          {/* <Suspense fallback={<Loading />}> */}
           <Route path="/" element={<HomeLayout />}>
             <Route index element={<Home />} />
-            <Route path="/interview" element={<Interview />} />
           </Route>
-          {/* </Suspense> */}
+          {/* <Route path="/" element={<InitialHome />} /> */}
         </Routes>
       </Container>
     </AuthContext>
