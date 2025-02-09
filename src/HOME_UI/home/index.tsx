@@ -11,7 +11,7 @@ export default function Home() {
       // justifyContent={"center"}
       // gap={2}
     >
-      {/* <Button variant="contained">Organisation</Button>
+      {/* <Button variant="contained" size="small">Organisation</Button>
       <Button variant="outlined">Candidate</Button> */}
 
       <Box>
@@ -54,7 +54,11 @@ export default function Home() {
                 <Typography variant="body1" color="text.secondary">
                   Overall interview insights
                 </Typography>
-                <Typography variant="button" color={APP_COLORS.PRIMARY}>
+                <Typography
+                  variant="button"
+                  color={APP_COLORS.PRIMARY}
+                  className="cursor-pointer"
+                >
                   Start Hiring Smarter →
                 </Typography>
               </Stack>
@@ -128,6 +132,7 @@ export default function Home() {
                   variant="button"
                   color={APP_COLORS.PRIMARY}
                   textAlign={"end"}
+                  className="cursor-pointer"
                 >
                   ← Take Charge of Your Career
                 </Typography>
@@ -165,6 +170,15 @@ export default function Home() {
             </Stack>
           </Box>
         </Stack>
+        <center>
+          <Typography
+            variant="body1"
+            color="text.secondary"
+            sx={{ marginTop: "5rem !Important" }}
+          >
+            Copyrights © 2025 Sundaran.
+          </Typography>
+        </center>
       </Box>
     </Box>
   );

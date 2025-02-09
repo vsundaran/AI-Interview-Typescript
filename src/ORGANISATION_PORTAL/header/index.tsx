@@ -3,9 +3,8 @@ import { Avatar, Box, Button } from "@mui/material";
 import AppLogo from "../../components/elementes/app-logo";
 import { useNavigate } from "react-router-dom";
 
-export default function HomeUIHeader() {
+export default function OrganisationHeader() {
   const Navigate = useNavigate();
-
   return (
     <Box
       zIndex={100}
@@ -35,16 +34,9 @@ export default function HomeUIHeader() {
           <Button
             variant="contained"
             size="small"
-            onClick={() => Navigate("/organisation")}
+            onClick={() => Navigate("create-job")}
           >
-            Organisation
-          </Button>
-          <Button
-            variant="outlined"
-            size="small"
-            onClick={() => Navigate("/candidate")}
-          >
-            Candidate
+            Create job
           </Button>
         </Box>
         <Avatar

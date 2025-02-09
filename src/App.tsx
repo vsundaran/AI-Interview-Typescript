@@ -8,6 +8,10 @@ import { Container } from "@mui/material";
 // import InitialHome from "./HOME_UI/home";
 import HomeLayout from "./layouts/default";
 import Home from "./HOME_UI/home";
+import OrganisationLayout from "./layouts/organisations";
+import OrganisationDashboard from "./ORGANISATION_PORTAL/dashboard";
+import PageNotFound from "./components/elementes/page-not-found";
+import CreateJob from "./ORGANISATION_PORTAL/create-job";
 
 // Lazy Loading for components
 // import HomeLayout from "./layouts/default";
@@ -27,8 +31,15 @@ function App() {
         <Routes>
           <Route path="/" element={<HomeLayout />}>
             <Route index element={<Home />} />
+            {/* 404 UI */}
+            <Route path="*" element={<PageNotFound />} />
           </Route>
-          {/* <Route path="/" element={<InitialHome />} /> */}
+
+          {/*organisations routes */}
+          <Route path="/organisation" element={<OrganisationLayout />}>
+            <Route index element={<OrganisationDashboard />} />
+            <Route path="create-job" element={<CreateJob />} />
+          </Route>
         </Routes>
       </Container>
     </AuthContext>
