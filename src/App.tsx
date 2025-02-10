@@ -15,6 +15,8 @@ import CreateJob from "./ORGANISATION_PORTAL/create-job";
 import OrganisationDashboard from "./ORGANISATION_PORTAL/dashboard";
 import OrganisationCandidateList from "./ORGANISATION_PORTAL/candidate-list";
 import OrganisationProfile from "./ORGANISATION_PORTAL/profile";
+import CandidateLayout from "./layouts/candidate";
+import CandidateDashboard from "./CANDIDATE_PORTAL/dashboard";
 
 // Lazy Loading for components
 // import HomeLayout from "./layouts/default";
@@ -36,6 +38,10 @@ function App() {
             <Route index element={<Home />} />
             {/* 404 UI */}
             <Route path="*" element={<PageNotFound />} />
+          </Route>
+
+          <Route path="/candidate" element={<CandidateLayout />}>
+            <Route index element={<CandidateDashboard />} />
           </Route>
 
           {/*organisations routes */}
