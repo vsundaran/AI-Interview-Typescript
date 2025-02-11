@@ -17,49 +17,60 @@ import OrganisationCandidateList from "./ORGANISATION_PORTAL/candidate-list";
 import OrganisationProfile from "./ORGANISATION_PORTAL/profile";
 import CandidateLayout from "./layouts/candidate";
 import CandidateDashboard from "./CANDIDATE_PORTAL/dashboard";
+import CandidateDashboardLayout from "./CANDIDATE_PORTAL/candidate-dashboard-layout";
+import CandidateCreateJob from "./CANDIDATE_PORTAL/create-job";
 
-// Lazy Loading for components
-// import HomeLayout from "./layouts/default";
-// const Home = lazy(() => import("./components/views/home"));
-// const Interview = lazy(() => import("./components/views/interview"));
-// import Home from "./components/views/home";
-
-//Loading for fallback
-// import { Loading } from "./components/elementes/suspense-loading";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+import JobsDataGrid from "./components/elementes/created-jobs";
 
 function App() {
-  // const [count, setCount] = useState(0);
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: "#174feb",
+      },
+    },
+  });
 
   return (
-    <AuthContext>
-      <Container>
-        <Routes>
-          <Route path="/" element={<HomeLayout />}>
-            <Route index element={<Home />} />
-            {/* 404 UI */}
-            <Route path="*" element={<PageNotFound />} />
-          </Route>
-
-          <Route path="/candidate" element={<CandidateLayout />}>
-            <Route index element={<CandidateDashboard />} />
-          </Route>
-
-          {/*organisations routes */}
-          <Route path="/organisation" element={<OrganisationLayout />}>
-            <Route element={<OrganisationDashboardLayout />}>
-              <Route index element={<OrganisationDashboard />} />
-              <Route path="dashboard" element={<OrganisationDashboard />} />
-              <Route
-                path="candidate-list"
-                element={<OrganisationCandidateList />}
-              />
-              <Route path="create-job" element={<CreateJob />} />
-              <Route path="profile" element={<OrganisationProfile />} />
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <AuthContext>
+        <Container>
+          <Routes>
+            <Route path="/" element={<HomeLayout />}>
+              <Route index element={<Home />} />
+              {/* 404 UI */}
+              <Route path="*" element={<PageNotFound />} />
             </Route>
-          </Route>
-        </Routes>
-      </Container>
-    </AuthContext>
+
+            <Route path="/candidate" element={<CandidateLayout />}>
+              <Route element={<CandidateDashboardLayout />}>
+                <Route index element={<CandidateDashboard />} />
+                <Route path="dashboard" element={<CandidateDashboard />} />
+                <Route path="create-job" element={<CandidateCreateJob />} />
+                <Route path="created-jobs" element={<JobsDataGrid />} />
+              </Route>
+            </Route>
+
+            {/*organisations routes */}
+            <Route path="/organisation" element={<OrganisationLayout />}>
+              <Route element={<OrganisationDashboardLayout />}>
+                <Route index element={<OrganisationDashboard />} />
+                <Route path="dashboard" element={<OrganisationDashboard />} />
+                <Route
+                  path="candidate-list"
+                  element={<OrganisationCandidateList />}
+                />
+                <Route path="create-job" element={<CreateJob />} />
+                <Route path="profile" element={<OrganisationProfile />} />
+              </Route>
+            </Route>
+          </Routes>
+        </Container>
+      </AuthContext>
+    </ThemeProvider>
   );
 }
 
