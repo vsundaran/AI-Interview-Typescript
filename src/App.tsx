@@ -22,7 +22,8 @@ import CandidateCreateJob from "./CANDIDATE_PORTAL/create-job";
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
-import JobsDataGrid from "./components/elementes/created-jobs";
+import CandidatesInterviews from "./CANDIDATE_PORTAL/interviews";
+import CandidateProfile from "./CANDIDATE_PORTAL/profile";
 
 function App() {
   const theme = createTheme({
@@ -50,7 +51,8 @@ function App() {
                 <Route index element={<CandidateDashboard />} />
                 <Route path="dashboard" element={<CandidateDashboard />} />
                 <Route path="create-job" element={<CandidateCreateJob />} />
-                <Route path="created-jobs" element={<JobsDataGrid />} />
+                <Route path="interviews" element={<CandidatesInterviews />} />
+                <Route path="profile" element={<CandidateProfile />} />
               </Route>
             </Route>
 

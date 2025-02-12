@@ -3,7 +3,7 @@ import { Avatar, Box, Fade, IconButton, Menu } from "@mui/material";
 import AppLogo from "../../components/elementes/app-logo";
 import { useState } from "react";
 import { List } from "lucide-react";
-import DashboardSideNavList from "../../ORGANISATION_PORTAL/dashboard-side-nav-list";
+import CandidateSideNavList from "../candidate-side-nav-list";
 
 export default function CandidatesHeader() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -57,7 +57,7 @@ export default function CandidatesHeader() {
         TransitionComponent={Fade}
       >
         <Box paddingX={2}>
-          <DashboardSideNavList />
+          <CandidateSideNavList />
         </Box>
       </Menu>
     </Box>

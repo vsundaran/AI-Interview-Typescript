@@ -27,7 +27,7 @@ export default function CandidateCreateJob() {
   };
 
   return (
-    <Box>
+    <Box width={"100%"}>
       <Typography variant="h6" sx={{ color: APP_COLORS.PRIMARY }}>
         Welcome to the AI Interview Preparation Tool!
       </Typography>

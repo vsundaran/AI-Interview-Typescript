@@ -18,6 +18,8 @@
     "@mui/x-data-grid": "^7.26.0",
     "@reduxjs/toolkit": "^2.5.1",
     "face-api.js": "^0.20.0",
+    "jspdf": "^2.5.2",
+    "jspdf-autotable": "^3.8.4",
     "lucide-react": "^0.475.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -27,7 +29,8 @@
     "react-type-animation": "^3.2.0",
     "react-webcam": "^7.2.0",
     "recharts": "^2.15.1",
-    "voice-activity-detection": "^0.0.5"
+    "voice-activity-detection": "^0.0.5",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",

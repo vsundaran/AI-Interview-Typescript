@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -12,11 +13,12 @@ import {
   PersonStanding,
 } from "lucide-react";
 import { Typography } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function DashboardSideNavList() {
-  const [selectedIndex, setSelectedIndex] = React.useState(1);
+  const [selectedIndex, setSelectedIndex] = useState(0);
   const Navigate = useNavigate();
+  const location = useLocation();
 
   const handleListItemClick = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
@@ -30,6 +32,33 @@ export default function DashboardSideNavList() {
       console.log("Logout");
     }
   };
+
+  useEffect(() => {
+    const URL = location.pathname;
+    switch (URL) {
+      case "/organisation/dashboard":
+        setSelectedIndex(0);
+        break;
+      case "/organisation":
+        setSelectedIndex(0);
+        break;
+      case "/organisation/candidate-list":
+        setSelectedIndex(1);
+        break;
+      case "/organisation/create-job":
+        setSelectedIndex(2);
+        break;
+      case "/organisation/profile":
+        setSelectedIndex(3);
+        break;
+      case "/organisation/logout":
+        setSelectedIndex(4);
+        break;
+      default:
+        setSelectedIndex(-1); // Fallback if URL doesn't match
+    }
+    // eslint-disable-next-line
+  }, [location.pathname]);
 
   return (
     <Box sx={{ width: "100%", maxWidth: 460, bgcolor: "background.paper" }}>

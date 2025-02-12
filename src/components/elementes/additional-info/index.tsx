@@ -87,7 +87,7 @@ export default function AdditionalInfo() {
           <TextField
             value={jobInfo?.jobDescription || ""}
             fullWidth
-            label="Job description (copy and past)"
+            label="Past Your Job Description or Resume"
             multiline
             maxRows={100}
             onChange={(event) => handleUpdate(event, "jobDescription")}

@@ -6,19 +6,20 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 
 import {
-  BriefcaseBusiness,
+  // BriefcaseBusiness,
   CircleUser,
   LogOut,
   LayoutDashboard,
-  // TvMinimal,
+  TvMinimal,
   BriefcaseMedical,
 } from "lucide-react";
 import { Typography } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function CandidateSideNavList() {
   const [selectedIndex, setSelectedIndex] = React.useState(0);
   const Navigate = useNavigate();
+  const location = useLocation();
 
   const handleListItemClick = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
@@ -34,8 +35,7 @@ export default function CandidateSideNavList() {
   };
 
   useEffect(() => {
-    const URL = window.location.pathname;
-    console.log(URL, "URL");
+    const URL = location.pathname;
     switch (URL) {
       case "/candidate/dashboard":
         setSelectedIndex(0);
@@ -46,8 +46,8 @@ export default function CandidateSideNavList() {
       case "/candidate/create-job":
         setSelectedIndex(1);
         break;
-      case "/candidate/created-jobs":
-        setSelectedIndex(3);
+      case "/candidate/interviews":
+        setSelectedIndex(2);
         break;
       case "/candidate/profile":
         setSelectedIndex(4);
@@ -59,7 +59,7 @@ export default function CandidateSideNavList() {
         setSelectedIndex(-1); // Fallback if URL doesn't match
     }
     // eslint-disable-next-line
-  }, []);
+  }, [location.pathname]);
 
   return (
     <Box sx={{ width: "100%", maxWidth: 460, bgcolor: "background.paper" }}>
@@ -96,23 +96,23 @@ export default function CandidateSideNavList() {
             }
           />
         </ListItemButton>
-        {/* <ListItemButton
+        <ListItemButton
           sx={{ borderRadius: "6px" }}
           selected={selectedIndex === 2}
-          onClick={(event) => handleListItemClick(event, 2, "create-job")}
+          onClick={(event) => handleListItemClick(event, 2, "interviews")}
         >
           <ListItemText
             primary={
               <React.Fragment>
                 <Box display={"flex"} alignItems={"center"} gap={1}>
                   <TvMinimal size={18} />
-                  <Typography variant="body1">Interview</Typography>
+                  <Typography variant="body1">Interviews</Typography>
                 </Box>
               </React.Fragment>
             }
           />
-        </ListItemButton> */}
-        <ListItemButton
+        </ListItemButton>
+        {/* <ListItemButton
           sx={{ borderRadius: "6px" }}
           selected={selectedIndex === 3}
           onClick={(event) => handleListItemClick(event, 3, "created-jobs")}
@@ -127,7 +127,7 @@ export default function CandidateSideNavList() {
               </React.Fragment>
             }
           />
-        </ListItemButton>
+        </ListItemButton> */}
         <ListItemButton
           sx={{ borderRadius: "6px" }}
           selected={selectedIndex === 4}

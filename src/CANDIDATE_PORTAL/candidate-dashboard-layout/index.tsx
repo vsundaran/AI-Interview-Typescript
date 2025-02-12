@@ -4,7 +4,7 @@ import CandidateSideNavList from "../candidate-side-nav-list";
 
 export default function CandidateDashboardLayout() {
   return (
-    <Box display={"flex"} gap={2}>
+    <Box display={"flex"} gap={2} width={"100%"}>
       <Box
         width={"100%"}
         maxWidth={200}
