@@ -13,7 +13,6 @@ export default function AIFeedBack() {
       padding={2}
       borderRadius={2}
       boxShadow={1}
-      maxHeight={"276px"}
       overflow={"scroll"}
       sx={{
         "&::-webkit-scrollbar": {

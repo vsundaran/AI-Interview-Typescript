@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 
 import DifficultGraph from "../../components/elementes/difficulty-graph";
@@ -11,25 +11,32 @@ import QuestionsAnswerMarks from "../../components/elementes/question-answer-mar
 const CandidateDashboard = () => {
   return (
     <Grid container spacing={{ md: 2 }}>
-      <Grid size={{ xs: 12, sm: 12, md: 6 }}>
-        <Grid container spacing={{ xs: 2 }}>
-          <Grid size={{ xs: 12, sm: 12, md: 6, lg: 6 }}>
-            <Box display={"flex"} flexDirection={"column"} gap={3}>
-              <DifficultGraph />
-              <DifficultGraph />
-            </Box>
+      <Grid size={{ xs: 12, sm: 12 }}>
+        <Stack spacing={3}>
+          <Grid container spacing={{ xs: 2 }}>
+            <Grid size={{ xs: 12, sm: 12, md: 6, lg: 6 }}>
+              <Box display={"flex"} flexDirection={"column"} gap={3}>
+                <DifficultGraph />
+                <DifficultGraph />
+              </Box>
+            </Grid>
+            <Grid size={{ xs: 12, sm: 12, md: 6, lg: 6 }}>
+              <QuestionsAnswerMarks />
+            </Grid>
           </Grid>
-          <Grid size={{ xs: 12, sm: 12, md: 6, lg: 6 }}>
-            <QuestionsAnswerMarks />
+          <Grid container spacing={{ xs: 2 }}>
+            <Grid size={{ xs: 12, sm: 12, md: 6, lg: 6 }}>
+              <DifficultGraph />
+            </Grid>
+            <Grid size={{ xs: 12, sm: 12, md: 6, lg: 6 }}>
+              <PerformanceChart />
+            </Grid>
           </Grid>
-        </Grid>
-        <Box marginTop={2} marginBottom={3}>
-          <DifficultGraph />
-        </Box>
+        </Stack>
       </Grid>
 
       {/* Right */}
-      <Grid spacing={{ xs: 2 }} size={{ xs: 12, sm: 12, md: 6 }}>
+      <Grid spacing={{ xs: 2 }} size={{ xs: 12, sm: 12 }}>
         <Grid container spacing={{ xs: 2 }}>
           <Grid size={{ xs: 12, sm: 12, md: 6 }}>
             <EyeContactChart />
@@ -40,9 +47,7 @@ const CandidateDashboard = () => {
             </Box>
           </Grid>
         </Grid>
-        <Box marginTop={2} marginBottom={3}>
-          <PerformanceChart />
-        </Box>
+
         <Box marginTop={2} marginBottom={3}>
           <AIFeedBack />
         </Box>
