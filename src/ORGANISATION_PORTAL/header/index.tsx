@@ -10,9 +10,11 @@ import Menu from "@mui/material/Menu";
 import Fade from "@mui/material/Fade";
 
 import { List } from "lucide-react";
+import { useAuth } from "../../context/AuthContext";
 
 export default function OrganisationHeader() {
   const Navigate = useNavigate();
+  const { user } = useAuth();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -27,6 +29,7 @@ export default function OrganisationHeader() {
     <Box
       zIndex={100}
       top={0}
+      minHeight={"60px"}
       paddingY={1}
       position={"sticky"}
       width={"100%"}
@@ -49,31 +52,33 @@ export default function OrganisationHeader() {
         </IconButton>
         <AppLogo sx={{ width: "auto" }} />
       </Box>
-      <Box
-        display={"flex"}
-        alignItems={"center"}
-        justifyContent={"center"}
-        gap={2}
-      >
+      {user ? (
         <Box
           display={"flex"}
           alignItems={"center"}
           justifyContent={"center"}
           gap={2}
         >
-          <Button
-            variant="contained"
-            size="small"
-            onClick={() => Navigate("create-job")}
+          <Box
+            display={"flex"}
+            alignItems={"center"}
+            justifyContent={"center"}
+            gap={2}
           >
-            Create job
-          </Button>
+            <Button
+              variant="contained"
+              size="small"
+              onClick={() => Navigate("create-job")}
+            >
+              Create job
+            </Button>
+          </Box>
+          <Avatar
+            alt="User"
+            src="https://media.licdn.com/dms/image/v2/D4D08AQE5GxVsMBA2vw/croft-frontend-shrinkToFit1024/croft-frontend-shrinkToFit1024/0/1636398674059?e=2147483647&v=beta&t=HNXXMj4_BJOtgI1SjdwaLthc1N1CzTqAs_AkCKTkK7I"
+          />
         </Box>
-        <Avatar
-          alt="User"
-          src="https://media.licdn.com/dms/image/v2/D4D08AQE5GxVsMBA2vw/croft-frontend-shrinkToFit1024/croft-frontend-shrinkToFit1024/0/1636398674059?e=2147483647&v=beta&t=HNXXMj4_BJOtgI1SjdwaLthc1N1CzTqAs_AkCKTkK7I"
-        />
-      </Box>
+      ) : null}
 
       <Menu
         id="fade-menu"

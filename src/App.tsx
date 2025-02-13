@@ -25,6 +25,8 @@ import CandidatesInterviews from "./CANDIDATE_PORTAL/interviews";
 import CandidateProfile from "./CANDIDATE_PORTAL/profile";
 import { theme } from "./theme/create-theme";
 import OrganisationCandidatesList from "./ORGANISATION_PORTAL/candidate-list";
+import OrganizationSignin from "./ORGANISATION_PORTAL/sign-in";
+import OrganizationSignup from "./ORGANISATION_PORTAL/sign-up";
 
 function App() {
   return (
@@ -51,6 +53,8 @@ function App() {
 
             {/*organisations routes */}
             <Route path="/organisation" element={<OrganisationLayout />}>
+              <Route path="signup" element={<OrganizationSignup />} />
+              <Route path="signin" element={<OrganizationSignin />} />
               <Route element={<OrganisationDashboardLayout />}>
                 <Route index element={<OrganisationDashboard />} />
                 <Route path="dashboard" element={<OrganisationDashboard />} />
