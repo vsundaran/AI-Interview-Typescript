@@ -14,22 +14,24 @@ import {
 } from "lucide-react";
 import { Typography } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
 export default function DashboardSideNavList() {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const Navigate = useNavigate();
   const location = useLocation();
+  const { openLogoutModal } = useAuth();
 
   const handleListItemClick = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
     index: number,
     navLink: string
   ) => {
-    setSelectedIndex(index);
     if (navLink !== "logout") {
+      setSelectedIndex(index);
       Navigate(navLink);
     } else {
-      console.log("Logout");
+      openLogoutModal();
     }
   };
 
@@ -136,8 +138,10 @@ export default function DashboardSideNavList() {
             primary={
               <React.Fragment>
                 <Box display={"flex"} alignItems={"center"} gap={1}>
-                  <LogOut size={18} />
-                  <Typography variant="body1">Logout</Typography>
+                  <LogOut size={18} color="#d32f2f" />
+                  <Typography variant="body1" color="error">
+                    Logout
+                  </Typography>
                 </Box>
               </React.Fragment>
             }

@@ -23,7 +23,7 @@ export default function CandidatesInterviews() {
 
   const columns = [
     { field: "id", headerName: "ID", width: 70 },
-    { field: "title", headerName: "Job Title", width: 200 },
+    { field: "title", headerName: "Job Title", flex: 1 },
     { field: "scores", headerName: "Scores", width: 180 },
     {
       field: "actions",
@@ -51,7 +51,7 @@ export default function CandidatesInterviews() {
         Want to improve your score? Try again!
       </Typography>
       <Box marginTop={2}>
-        <JobsDataGrid jobs={jobs} columns={columns} />
+        <JobsDataGrid title="Job Data" rows={jobs} columns={columns} />
       </Box>
     </Box>
   );

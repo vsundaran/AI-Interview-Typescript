@@ -28,7 +28,10 @@ export default function CreateJob() {
 
   return (
     <Box>
-      <Typography variant="h6" sx={{ color: APP_COLORS.PRIMARY }}>
+      <Typography
+        variant="h6"
+        sx={{ color: APP_COLORS.PRIMARY, fontSize: "24px" }}
+      >
         Welcome to the AI Interview Preparation Tool!
       </Typography>
       <Typography variant="body1" sx={{ fontWeight: "medium" }}>

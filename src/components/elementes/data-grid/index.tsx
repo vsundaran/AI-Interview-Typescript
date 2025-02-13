@@ -5,43 +5,45 @@ import * as XLSX from "xlsx";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 
-interface Job {
-  id: number;
-  title: string;
-  candidates?: number;
+interface Row {
+  id: number | string;
+  title?: string;
   scores?: number;
+  name?: string;
+  status?: string;
 }
 
 type JobsDataGridProps = {
-  jobs: Job[];
+  rows: Row[];
   columns: GridColDef[];
+  title: string;
 };
 
-const JobsDataGrid = ({ jobs, columns }: JobsDataGridProps) => {
+const DataGridDownload = ({ rows, columns, title }: JobsDataGridProps) => {
   // Function to export data as Excel
   const exportToExcel = () => {
-    const worksheet = XLSX.utils.json_to_sheet(jobs);
+    const worksheet = XLSX.utils.json_to_sheet(rows);
     const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Jobs");
-    XLSX.writeFile(workbook, "JobsData.xlsx");
+    XLSX.utils.book_append_sheet(workbook, worksheet, title);
+    XLSX.writeFile(workbook, `${title}.xlsx`);
   };
 
   // Function to export data as PDF
   const exportToPDF = () => {
     const doc = new jsPDF();
-    doc.text("Jobs Data", 20, 10);
+    doc.text(title, 20, 10);
     //eslint-disable-next-line
     (doc as any).autoTable({
       head: [columns.map((col) => col.headerName)],
-      body: jobs.map((job) =>
-        columns.map((col) => job[col.field as keyof Job] || "")
+      body: rows.map((row) =>
+        columns.map((col) => row[col.field as keyof Row] || "")
       ),
     });
-    doc.save("JobsData.pdf");
+    doc.save(`${title}.pdf`);
   };
 
   return (
-    <Box style={{ height: 400, width: "100%" }}>
+    <Box sx={{ width: "100%" }}>
       <Box display="flex" justifyContent="end" gap={1} mb={1}>
         <Button
           size="small"
@@ -62,9 +64,19 @@ const JobsDataGrid = ({ jobs, columns }: JobsDataGridProps) => {
           PDF
         </Button>
       </Box>
-      <DataGrid rows={jobs} columns={columns} />
+      <DataGrid
+        // sx={{ maxHeight: 400, overflow: "scroll" }}
+        rows={rows}
+        columns={columns}
+        initialState={{
+          pagination: {
+            paginationModel: { pageSize: 25, page: 0 }, // Default page size 25
+          },
+        }}
+        pageSizeOptions={[5]}
+      />
     </Box>
   );
 };
 
-export default JobsDataGrid;
+export default DataGridDownload;

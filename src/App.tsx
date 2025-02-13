@@ -13,27 +13,20 @@ import OrganisationDashboardLayout from "./ORGANISATION_PORTAL/dashboard-layout"
 import PageNotFound from "./components/elementes/page-not-found";
 import CreateJob from "./ORGANISATION_PORTAL/create-job";
 import OrganisationDashboard from "./ORGANISATION_PORTAL/dashboard";
-import OrganisationCandidateList from "./ORGANISATION_PORTAL/candidate-list";
 import OrganisationProfile from "./ORGANISATION_PORTAL/profile";
 import CandidateLayout from "./layouts/candidate";
 import CandidateDashboard from "./CANDIDATE_PORTAL/dashboard";
 import CandidateDashboardLayout from "./CANDIDATE_PORTAL/candidate-dashboard-layout";
 import CandidateCreateJob from "./CANDIDATE_PORTAL/create-job";
 
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import CandidatesInterviews from "./CANDIDATE_PORTAL/interviews";
 import CandidateProfile from "./CANDIDATE_PORTAL/profile";
+import { theme } from "./theme/create-theme";
+import OrganisationCandidatesList from "./ORGANISATION_PORTAL/candidate-list";
 
 function App() {
-  const theme = createTheme({
-    palette: {
-      primary: {
-        main: "#174feb",
-      },
-    },
-  });
-
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -63,7 +56,7 @@ function App() {
                 <Route path="dashboard" element={<OrganisationDashboard />} />
                 <Route
                   path="candidate-list"
-                  element={<OrganisationCandidateList />}
+                  element={<OrganisationCandidatesList />}
                 />
                 <Route path="create-job" element={<CreateJob />} />
                 <Route path="profile" element={<OrganisationProfile />} />

@@ -1,8 +1,10 @@
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, Button, Stack, Typography } from "@mui/material";
 import { APP_COLORS } from "../../theme/colors";
 import Standing_Girl from "../../Assects/Images/Standing_Girl.jpg";
+import { useNavigate } from "react-router-dom";
 
 export default function Home() {
+  const Navigate = useNavigate();
   return (
     <Box
       sx={{ width: "100%" }}
@@ -59,7 +61,12 @@ export default function Home() {
                   color={APP_COLORS.PRIMARY}
                   className="cursor-pointer"
                 >
-                  Start Hiring Smarter →
+                  <Button
+                    variant="text"
+                    onClick={() => Navigate("/organisation")}
+                  >
+                    Start Hiring Smarter →
+                  </Button>
                 </Typography>
               </Stack>
             </Box>
@@ -134,7 +141,9 @@ export default function Home() {
                   textAlign={"end"}
                   className="cursor-pointer"
                 >
-                  ← Take Charge of Your Career
+                  <Button variant="text" onClick={() => Navigate("/candidate")}>
+                    ← Take Charge of Your Career
+                  </Button>
                 </Typography>
               </Stack>
             </Box>
