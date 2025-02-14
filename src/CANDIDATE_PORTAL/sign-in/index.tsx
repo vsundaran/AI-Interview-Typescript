@@ -16,7 +16,7 @@ interface LoginData {
   password: string;
 }
 
-export default function OrganizationSignin() {
+export default function CandidateSignin() {
   const [loginData, setLoginData] = useState<LoginData>({
     email: "",
     password: "",
@@ -36,13 +36,13 @@ export default function OrganizationSignin() {
     if (validate()) {
       // console.log("User Logged In", loginData);
       Cookies.set(
-        "organisationToken",
+        "candidateToken",
         "dcbjbvwsojvcjbdwivifbwrifurwiufwrgfbwruofgwiufgwif"
       );
       const loginInterval = setInterval(() => {
-        if (Cookies.get("organisationToken")) {
+        if (Cookies.get("candidateToken")) {
           clearInterval(loginInterval);
-          Navigate("/organisation/dashboard");
+          Navigate("/candidate/dashboard");
         }
       }, 100);
     }
@@ -63,7 +63,8 @@ export default function OrganizationSignin() {
           Welcome Back!
         </Typography>
         <Typography variant="body1" sx={{ fontWeight: "medium" }}>
-          Log in to your account and continue streamlining your hiring process.
+          Log in to access your interview details and stay updated on your
+          hiring process.
         </Typography>
         <Box component="form" sx={{ mt: 3 }}>
           <Stack spacing={2}>
@@ -104,7 +105,7 @@ export default function OrganizationSignin() {
             <div
               className="cursor-pointer"
               style={{ display: "inline-block" }}
-              onClick={() => Navigate("/organisation/forgot-password")}
+              onClick={() => Navigate("/candidate/forgot-password")}
             >
               <Link variant="body2">Forgot Password?</Link>
             </div>
@@ -114,7 +115,7 @@ export default function OrganizationSignin() {
             <div
               className="cursor-pointer"
               style={{ display: "inline-block" }}
-              onClick={() => Navigate("/organisation/sign-up")}
+              onClick={() => Navigate("/candidate/sign-up")}
             >
               <Link variant="body2">Sign Up</Link>
             </div>

@@ -20,7 +20,7 @@ interface Organization {
   password: string;
 }
 
-export default function OrganizationSignup() {
+export default function CandidateSignup() {
   const [organization, setOrganization] = useState<Organization>({
     companyName: "",
     companyLogo: null,
@@ -180,7 +180,7 @@ export default function OrganizationSignup() {
             <div
               className="cursor-pointer"
               style={{ display: "inline-block" }}
-              onClick={() => Navigate("/organisation/forgot-password")}
+              onClick={() => Navigate("/candidate/forgot-password")}
             >
               <Link variant="body2">Forgot Password?</Link>
             </div>
@@ -190,7 +190,7 @@ export default function OrganizationSignup() {
             <div
               className="cursor-pointer"
               style={{ display: "inline-block" }}
-              onClick={() => Navigate("/organisation/sign-in")}
+              onClick={() => Navigate("/candidate/sign-in")}
             >
               <Link variant="body2">Sign in</Link>
             </div>

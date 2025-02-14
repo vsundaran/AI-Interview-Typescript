@@ -28,8 +28,10 @@ import { theme } from "./theme/create-theme";
 import OrganisationCandidatesList from "./ORGANISATION_PORTAL/candidate-list";
 import OrganizationSignin from "./ORGANISATION_PORTAL/sign-in";
 import OrganizationSignup from "./ORGANISATION_PORTAL/sign-up";
-import OrganisationForgotPassword from "./ORGANISATION_PORTAL/forgot-passwrod";
 import ProtectedRoute from "./components/elementes/protected-route";
+import CandidateSignin from "./CANDIDATE_PORTAL/sign-in";
+import CandidateSignup from "./CANDIDATE_PORTAL/sign-up";
+import ForgotPassword from "./components/elementes/forgot-passwrod";
 
 function App() {
   return (
@@ -45,6 +47,9 @@ function App() {
             </Route>
 
             <Route path="/candidate" element={<CandidateLayout />}>
+              <Route path="forgot-password" element={<ForgotPassword />} />
+              <Route path="sign-in" element={<CandidateSignin />} />
+              <Route path="sign-up" element={<CandidateSignup />} />
               <Route element={<CandidateDashboardLayout />}>
                 <Route
                   index
@@ -91,12 +96,9 @@ function App() {
 
             {/*organisations routes */}
             <Route path="/organisation" element={<OrganisationLayout />}>
-              <Route path="signup" element={<OrganizationSignup />} />
-              <Route path="signin" element={<OrganizationSignin />} />
-              <Route
-                path="forgot-password"
-                element={<OrganisationForgotPassword />}
-              />
+              <Route path="sign-up" element={<OrganizationSignup />} />
+              <Route path="sign-in" element={<OrganizationSignin />} />
+              <Route path="forgot-password" element={<ForgotPassword />} />
               <Route element={<OrganisationDashboardLayout />}>
                 <Route
                   index

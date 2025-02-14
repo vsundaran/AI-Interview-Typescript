@@ -8,12 +8,16 @@ import {
   Link,
   Stack,
 } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
-export default function OrganisationForgotPassword() {
+export default function ForgotPassword() {
   const [email, setEmail] = useState("");
   const [errors, setErrors] = useState<{ email?: string }>({});
   const Navigate = useNavigate();
+  const location = useLocation();
+
+  const path = location.pathname;
+  const portalName = path.split("/")?.[1];
 
   const validate = () => {
     const tempErrors: { email?: string } = {};
@@ -71,7 +75,7 @@ export default function OrganisationForgotPassword() {
               <div
                 className="cursor-pointer"
                 style={{ display: "inline-block" }}
-                onClick={() => Navigate("/organisation/signin")}
+                onClick={() => Navigate(`/${portalName}/sign-in`)}
               >
                 <Link variant="body2">Sign in</Link>
               </div>
@@ -82,7 +86,7 @@ export default function OrganisationForgotPassword() {
               <div
                 className="cursor-pointer"
                 style={{ display: "inline-block" }}
-                onClick={() => Navigate("/organisation/signup")}
+                onClick={() => Navigate(`/${portalName}/sign-up`)}
               >
                 <Link variant="body2">Sign Up</Link>
               </div>
