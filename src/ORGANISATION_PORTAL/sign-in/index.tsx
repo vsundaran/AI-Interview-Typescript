@@ -9,6 +9,7 @@ import {
   Stack,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 interface LoginData {
   email: string;
@@ -24,7 +25,7 @@ export default function OrganizationSignin() {
   const Navigate = useNavigate();
 
   const validate = () => {
-    let tempErrors: { [key: string]: string } = {};
+    const tempErrors: { [key: string]: string } = {};
     if (!loginData.email) tempErrors.email = "Email is required";
     if (!loginData.password) tempErrors.password = "Password is required";
     setErrors(tempErrors);
@@ -33,13 +34,20 @@ export default function OrganizationSignin() {
 
   const handleSubmit = () => {
     if (validate()) {
-      console.log("User Logged In", loginData);
+      // console.log("User Logged In", loginData);
+      Cookies.set(
+        "organisationToken",
+        "dcbjbvwsojvcjbdwivifbwrifurwiufwrgfbwruofgwiufgwif"
+      );
+      const loginInterval = setInterval(() => {
+        if (Cookies.get("organisationToken")) {
+          clearInterval(loginInterval);
+          Navigate("/organisation/dashboard");
+        }
+      }, 100);
     }
   };
 
-  const handleNavigate = (link: string) => {
-    Navigate(link);
-  };
   return (
     <center>
       <Container
@@ -91,19 +99,25 @@ export default function OrganizationSignin() {
               Login
             </Button>
           </Stack>
-          <Typography variant="body2" sx={{ marginTop: 1 }}>
-            <Button
-              variant="text"
-              onClick={() => handleNavigate("forgot-password")}
+
+          <Typography variant="body2" sx={{ marginY: 1 }}>
+            <div
+              className="cursor-pointer"
+              style={{ display: "inline-block" }}
+              onClick={() => Navigate("/organisation/forgot-password")}
             >
-              <Link>Forgot Password?</Link>
-            </Button>
+              <Link variant="body2">Forgot Password?</Link>
+            </div>
           </Typography>
           <Typography variant="body2">
             Don't have an account?{" "}
-            <Button variant="text" onClick={() => handleNavigate("signup")}>
-              <Link href="signup">Sign Up</Link>
-            </Button>
+            <div
+              className="cursor-pointer"
+              style={{ display: "inline-block" }}
+              onClick={() => Navigate("/organisation/signup")}
+            >
+              <Link variant="body2">Sign Up</Link>
+            </div>
           </Typography>
         </Box>
       </Container>

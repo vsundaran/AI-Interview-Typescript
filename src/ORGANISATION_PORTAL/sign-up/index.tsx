@@ -10,6 +10,7 @@ import {
   Link,
 } from "@mui/material";
 import { Upload } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 interface Organization {
   companyName: string;
@@ -38,14 +39,14 @@ export default function OrganizationSignup() {
     }
   };
 
+  const Navigate = useNavigate();
+
   const validate = () => {
-    let tempErrors: { [key: string]: string } = {};
+    const tempErrors: { [key: string]: string } = {};
     if (!organization.companyName)
       tempErrors.companyName = "Company Name is required";
     if (!organization.companyEmail)
       tempErrors.companyEmail = "Company Email is required";
-    if (!organization.employerName)
-      tempErrors.employerName = "Employer Name is required";
     if (!organization.password) tempErrors.password = "Password is required";
     setErrors(tempErrors);
     return Object.keys(tempErrors).length === 0;
@@ -174,14 +175,26 @@ export default function OrganizationSignup() {
             >
               Register
             </Button>
-
-            <Typography variant="body2">
-              <Link href="forgot-password">Forgot Password?</Link>
-            </Typography>
-            <Typography variant="body2">
-              Already have an account? <Link href="signin">Login</Link>
-            </Typography>
           </Stack>
+          <Typography variant="body2" sx={{ marginY: 1 }}>
+            <div
+              className="cursor-pointer"
+              style={{ display: "inline-block" }}
+              onClick={() => Navigate("/organisation/forgot-password")}
+            >
+              <Link variant="body2">Forgot Password?</Link>
+            </div>
+          </Typography>
+          <Typography variant="body2">
+            Already have an account?{" "}
+            <div
+              className="cursor-pointer"
+              style={{ display: "inline-block" }}
+              onClick={() => Navigate("/organisation/signin")}
+            >
+              <Link variant="body2">Sign in</Link>
+            </div>
+          </Typography>
         </Box>
       </Container>
     </center>

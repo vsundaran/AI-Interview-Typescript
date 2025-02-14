@@ -7,7 +7,8 @@ import {
   useState,
 } from "react";
 import LogoutConfirmModal from "../../components/elementes/logout";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 // Define the type for the context value
 interface AuthContextType {
@@ -40,6 +41,7 @@ const AuthContext = ({ children }: AuthContextProps) => {
   const [user, setUser] = useState<UserData | null>(null);
   const [logoutModalOpen, setLogoutModalOpen] = useState(false);
   const Navigate = useNavigate();
+  const location = useLocation();
 
   const handleLogin = (userData: UserData) => {
     setUser(userData);
@@ -49,6 +51,12 @@ const AuthContext = ({ children }: AuthContextProps) => {
   const closeLogoutModal = () => setLogoutModalOpen(false);
 
   const handleLogout = () => {
+    const subRoute = location.pathname.split("/")[1];
+    if (subRoute === "candidate") {
+      Cookies.remove("candidateToken");
+    } else if (subRoute === "organisation") {
+      Cookies.remove("organisationToken");
+    }
     setUser(null); // Clear user state
     console.log("User logged out"); // Add more logic like removing token, redirecting, etc.
     closeLogoutModal();
