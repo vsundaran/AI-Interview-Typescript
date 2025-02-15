@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import {
   Container,
   TextField,
@@ -10,6 +10,9 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import { signin } from "../../services/API/routes/common";
+import { enqueueSnackbar } from "notistack";
+import { returnErrorMessage } from "../../components/elementes/error";
 
 interface LoginData {
   email: string;
@@ -21,6 +24,7 @@ export default function CandidateSignin() {
     email: "",
     password: "",
   });
+  const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const Navigate = useNavigate();
 
@@ -32,19 +36,34 @@ export default function CandidateSignin() {
     return Object.keys(tempErrors).length === 0;
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event?.preventDefault();
+
     if (validate()) {
-      // console.log("User Logged In", loginData);
-      Cookies.set(
-        "candidateToken",
-        "dcbjbvwsojvcjbdwivifbwrifurwiufwrgfbwruofgwiufgwif"
-      );
-      const loginInterval = setInterval(() => {
-        if (Cookies.get("candidateToken")) {
-          clearInterval(loginInterval);
-          Navigate("/candidate/dashboard");
+      try {
+        setLoading(true);
+        const response = await signin({
+          email: loginData.email,
+          password: loginData.password,
+          role: "candidate",
+        });
+        if (response.success) {
+          const { token } = response;
+          Cookies.set("candidateToken", token);
+          const loginInterval = setInterval(() => {
+            console.log("running interval");
+            if (Cookies.get("candidateToken")) {
+              clearInterval(loginInterval);
+              Navigate("/candidate/dashboard");
+            }
+          }, 100);
         }
-      }, 100);
+      } catch (err) {
+        const errorMessage = returnErrorMessage(err);
+        enqueueSnackbar(errorMessage, { variant: "error" });
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
@@ -66,7 +85,7 @@ export default function CandidateSignin() {
           Log in to access your interview details and stay updated on your
           hiring process.
         </Typography>
-        <Box component="form" sx={{ mt: 3 }}>
+        <Box component="form" sx={{ mt: 3 }} onSubmit={handleSubmit}>
           <Stack spacing={2}>
             <TextField
               fullWidth
@@ -92,10 +111,11 @@ export default function CandidateSignin() {
               helperText={errors.password}
             />
             <Button
+              loading={loading}
+              type="submit"
               fullWidth
               variant="contained"
               color="primary"
-              onClick={handleSubmit}
             >
               Login
             </Button>

@@ -9,7 +9,7 @@ export const registerUser = async (req, res) => {
         return res.status(400).json({ success: false, message: "All fields are required" });
     }
 
-    if (role !== "employer" && role !== "candidate") {
+    if (role !== "organisation" && role !== "candidate") {
         return res.status(400).json({ success: false, message: "Invalid role" });
     }
 
@@ -20,8 +20,8 @@ export const registerUser = async (req, res) => {
 
     const user = await User.create({ name, email, password, role });
     if (user) {
-        generateToken(res, user._id, role);
-        res.status(201).json({ success: true, user: { _id: user._id, name: user.name, email: user.email, role: user.role } });
+        const token = generateToken(user._id);
+        res.status(201).json({ success: true, token, user: { _id: user._id, name: user.name, email: user.email, role: user.role } });
     } else {
         res.status(400).json({ success: false, message: "Invalid user data" });
     }
@@ -38,8 +38,8 @@ export const loginUser = async (req, res) => {
     const user = await User.findOne({ email });
 
     if (user && (await user.matchPassword(password))) {
-        generateToken(res, user._id, role);
-        res.json({ success: true, user: { _id: user._id, name: user.name, email: user.email, role: user.role } });
+        const token = generateToken(user._id);
+        res.json({ success: true, token, user: { _id: user._id, name: user.name, email: user.email, role: user.role } });
     } else {
         res.status(401).json({ success: false, message: "Invalid email or password" });
     }
