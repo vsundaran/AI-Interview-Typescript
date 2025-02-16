@@ -1,9 +1,14 @@
-export interface ApiResponse<T> {
-  success: boolean;
-  message: string;
-  token:string;
+export interface AxiosApiResponse<T> {
   data: T;
-};
+  status: number;
+  statusText: string;
+}
+
+export interface RegisterResponse {
+  success:boolean;
+  token:string;
+  user:UserData
+}
 
 
 

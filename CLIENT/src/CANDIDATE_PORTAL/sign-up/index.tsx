@@ -67,9 +67,9 @@ export default function CandidateSignup() {
           role: "candidate",
         });
         if (response.success) {
-          const { token, data } = response;
-          setUser(data);
-          Cookies.set("candidateToken", token);
+          const { token, user } = response;
+          setUser(user ?? null);
+          Cookies.set("candidateToken", token ?? "");
           const loginInterval = setInterval(() => {
             console.log("running interval");
             if (Cookies.get("candidateToken")) {

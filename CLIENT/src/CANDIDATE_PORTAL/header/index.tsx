@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { List } from "lucide-react";
 import CandidateSideNavList from "../candidate-side-nav-list";
 import { useAuth } from "../../context/AuthContext";
+import { APP_COLORS } from "../../theme/colors";
 
 export default function CandidatesHeader() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -56,7 +57,9 @@ export default function CandidatesHeader() {
           //   alt="User"
           //   src="https://media.licdn.com/dms/image/v2/D4D08AQE5GxVsMBA2vw/croft-frontend-shrinkToFit1024/croft-frontend-shrinkToFit1024/0/1636398674059?e=2147483647&v=beta&t=HNXXMj4_BJOtgI1SjdwaLthc1N1CzTqAs_AkCKTkK7I"
           // />
-          <Avatar>{user.name}</Avatar>
+          <Avatar sx={{ background: APP_COLORS.PRIMARY }}>
+            {user.name.split("")?.[0].toUpperCase() || "A"}
+          </Avatar>
         ) : null}
       </Box>
 
