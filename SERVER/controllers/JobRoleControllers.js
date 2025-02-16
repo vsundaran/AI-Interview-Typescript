@@ -1,4 +1,4 @@
-import JobRole from "../../models/organisation/JobRole.js";
+import JobRole from "../models/organisation/JobRole.js";
 
 // Register User
 export const CreateJobRole = async (req, res) => {
@@ -47,17 +47,14 @@ export const CreateJobRole = async (req, res) => {
 
 export const getAllJobRoles = async (req, res) => {
     try {
-        const { userId } = req.params; // Extract userId from URL params
+        const { userId } = req.params;
+        console.log(userId)
 
         if (!userId) {
             return res.status(400).json({ success: false, message: "Organisation ID is required" });
         }
 
-        const jobRoles = await JobRole.find({ userId: userId, role: "organisation" });
-
-        if (!jobRoles.length) {
-            return res.status(404).json({ success: false, message: "No job roles found for this organisation" });
-        }
+        const jobRoles = await JobRole.find({ userId });
 
         res.status(200).json({ success: true, jobRoles });
     } catch (error) {
