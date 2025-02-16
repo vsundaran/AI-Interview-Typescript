@@ -24,3 +24,21 @@ export const restrictTo = (roles) => (req, res, next) => {
     }
     next();
 };
+
+
+
+export const authenticateUser = (req, res, next) => {
+    const token = req.header("Authorization");
+
+    if (!token) {
+        return res.status(401).json({ success: false, message: "No token, authorization denied" });
+    }
+
+    try {
+        const decoded = jwt.verify(token.replace("Bearer ", ""), process.env.JWT_SECRET);
+        req.user = decoded;
+        next();
+    } catch (error) {
+        return res.status(401).json({ success: false, message: "Invalid token" });
+    }
+};
