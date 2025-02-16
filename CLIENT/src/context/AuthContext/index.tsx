@@ -9,13 +9,16 @@ import {
 import LogoutConfirmModal from "../../components/elementes/logout";
 import { useLocation, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import { UserData } from "../../services/API/types";
 
 // Define the type for the context value
-interface AuthContextType {
+export interface AuthContextType {
   user: UserData | null;
   setUser: Dispatch<SetStateAction<UserData | null>>;
   handleLogin: (userData: UserData) => void;
   openLogoutModal: () => void;
+  authLoading: boolean;
+  setAuthLoading: Dispatch<SetStateAction<boolean>>;
 }
 
 const Auth = createContext<AuthContextType>({
@@ -23,23 +26,21 @@ const Auth = createContext<AuthContextType>({
   setUser: () => {},
   handleLogin: () => {},
   openLogoutModal: () => {},
+  authLoading: false,
+  setAuthLoading: (bool) => bool,
 });
 
 interface AuthContextProps {
   children?: ReactNode;
 }
 
-type UserData = {
-  id: string;
-  userName: string;
-  token: string;
-};
-
 export const useAuth = () => useContext(Auth);
 
 const AuthContext = ({ children }: AuthContextProps) => {
   const [user, setUser] = useState<UserData | null>(null);
   const [logoutModalOpen, setLogoutModalOpen] = useState(false);
+  const [authLoading, setAuthLoading] = useState(false);
+
   const Navigate = useNavigate();
   const location = useLocation();
 
@@ -64,7 +65,16 @@ const AuthContext = ({ children }: AuthContextProps) => {
   };
 
   return (
-    <Auth.Provider value={{ user, setUser, handleLogin, openLogoutModal }}>
+    <Auth.Provider
+      value={{
+        user,
+        setUser,
+        handleLogin,
+        openLogoutModal,
+        setAuthLoading,
+        authLoading,
+      }}
+    >
       {children}
       <LogoutConfirmModal
         open={logoutModalOpen}

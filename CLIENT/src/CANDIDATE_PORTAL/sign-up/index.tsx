@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import {
   Container,
   TextField,
@@ -11,30 +11,35 @@ import {
 } from "@mui/material";
 import { Upload } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { register } from "../../services/API/routes/common";
+import Cookies from "js-cookie";
+import { returnErrorMessage } from "../../components/elementes/error";
+import { enqueueSnackbar } from "notistack";
+import { useAuth } from "../../context/AuthContext";
 
-interface Organization {
-  companyName: string;
-  companyLogo: File | null;
-  companyEmail: string;
-  employerName: string;
+interface Candidate {
+  name: string;
+  profile: File | null;
+  email: string;
   password: string;
 }
 
 export default function CandidateSignup() {
-  const [organization, setOrganization] = useState<Organization>({
-    companyName: "",
-    companyLogo: null,
-    companyEmail: "",
-    employerName: "",
+  const [candidate, setCandidate] = useState<Candidate>({
+    email: "",
+    name: "",
     password: "",
+    profile: null,
   });
   const [logoPreview, setLogoPreview] = useState<string | null>(null);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const [loading, setLoading] = useState(false);
+  const { setUser } = useAuth();
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0];
-      setOrganization({ ...organization, companyLogo: file });
+      setCandidate({ ...candidate, profile: file });
       setLogoPreview(URL.createObjectURL(file));
     }
   };
@@ -43,18 +48,42 @@ export default function CandidateSignup() {
 
   const validate = () => {
     const tempErrors: { [key: string]: string } = {};
-    if (!organization.companyName)
-      tempErrors.companyName = "Company Name is required";
-    if (!organization.companyEmail)
-      tempErrors.companyEmail = "Company Email is required";
-    if (!organization.password) tempErrors.password = "Password is required";
+    if (!candidate.name) tempErrors.companyName = "Name is required";
+    if (!candidate.email) tempErrors.companyEmail = "Email is required";
+    if (!candidate.password) tempErrors.password = "Password is required";
     setErrors(tempErrors);
     return Object.keys(tempErrors).length === 0;
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     if (validate()) {
-      console.log("Organization Registered", organization);
+      try {
+        setLoading(true);
+        const response = await register({
+          name: candidate.name,
+          email: candidate.email,
+          password: candidate.password,
+          role: "candidate",
+        });
+        if (response.success) {
+          const { token, data } = response;
+          setUser(data);
+          Cookies.set("candidateToken", token);
+          const loginInterval = setInterval(() => {
+            console.log("running interval");
+            if (Cookies.get("candidateToken")) {
+              clearInterval(loginInterval);
+              Navigate("/candidate/dashboard");
+            }
+          }, 100);
+        }
+      } catch (err) {
+        const errorMessage = returnErrorMessage(err);
+        enqueueSnackbar(errorMessage, { variant: "error" });
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
@@ -70,14 +99,13 @@ export default function CandidateSignup() {
         }}
       >
         <Typography variant="h5" gutterBottom color="primary">
-          Sign Up for Free – Streamline Your Hiring Process
+          Sign Up for Free – Simplify Your Hiring Journey
         </Typography>
         <Typography variant="body1" sx={{ fontWeight: "medium" }}>
-          Join AI interview and simplify your hiring journey. Easily assign
-          interviews to candidates and make informed hiring decisions - all in
-          one place!
+          Sign up to access your interview details and stay updated on your
+          hiring process.
         </Typography>
-        <Box component="form" sx={{ mt: 3 }}>
+        <Box component="form" sx={{ mt: 3 }} onSubmit={handleSubmit}>
           <Stack spacing={2}>
             <input
               type="file"
@@ -108,58 +136,43 @@ export default function CandidateSignup() {
 
             <TextField
               fullWidth
-              label="Company Name"
+              label="Name"
               variant="standard"
-              value={organization.companyName}
+              value={candidate.name}
               onChange={(e) =>
-                setOrganization({
-                  ...organization,
-                  companyName: e.target.value,
+                setCandidate({
+                  ...candidate,
+                  name: e.target.value,
                 })
               }
-              error={!!errors.companyName}
-              helperText={errors.companyName}
+              error={!!errors.name}
+              helperText={errors.name}
             />
 
             <TextField
               fullWidth
-              label="Company Email"
+              label="Email"
               variant="standard"
-              value={organization.companyEmail}
+              value={candidate.email}
               onChange={(e) =>
-                setOrganization({
-                  ...organization,
-                  companyEmail: e.target.value,
+                setCandidate({
+                  ...candidate,
+                  email: e.target.value,
                 })
               }
-              error={!!errors.companyEmail}
-              helperText={errors.companyEmail}
+              error={!!errors.email}
+              helperText={errors.email}
             />
-
-            {/* <TextField
-              fullWidth
-              label="Employer Name"
-              variant="standard"
-              value={organization.employerName}
-              onChange={(e) =>
-                setOrganization({
-                  ...organization,
-                  employerName: e.target.value,
-                })
-              }
-              error={!!errors.employerName}
-              helperText={errors.employerName}
-            /> */}
 
             <TextField
               fullWidth
               label="Password"
               type="password"
               variant="standard"
-              value={organization.password}
+              value={candidate.password}
               onChange={(e) =>
-                setOrganization({
-                  ...organization,
+                setCandidate({
+                  ...candidate,
                   password: e.target.value,
                 })
               }
@@ -168,10 +181,11 @@ export default function CandidateSignup() {
             />
 
             <Button
+              type="submit"
+              loading={loading}
               fullWidth
               variant="contained"
               color="primary"
-              onClick={handleSubmit}
             >
               Register
             </Button>

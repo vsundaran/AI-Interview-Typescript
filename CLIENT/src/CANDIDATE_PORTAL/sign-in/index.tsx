@@ -13,6 +13,7 @@ import Cookies from "js-cookie";
 import { signin } from "../../services/API/routes/common";
 import { enqueueSnackbar } from "notistack";
 import { returnErrorMessage } from "../../components/elementes/error";
+import { useAuth } from "../../context/AuthContext";
 
 interface LoginData {
   email: string;
@@ -27,6 +28,7 @@ export default function CandidateSignin() {
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const Navigate = useNavigate();
+  const { setUser } = useAuth();
 
   const validate = () => {
     const tempErrors: { [key: string]: string } = {};
@@ -48,7 +50,8 @@ export default function CandidateSignin() {
           role: "candidate",
         });
         if (response.success) {
-          const { token } = response;
+          const { token, data } = response;
+          setUser(data);
           Cookies.set("candidateToken", token);
           const loginInterval = setInterval(() => {
             console.log("running interval");

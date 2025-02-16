@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import {
   Container,
   TextField,
@@ -10,6 +10,10 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import { enqueueSnackbar } from "notistack";
+import { returnErrorMessage } from "../../components/elementes/error";
+import { signin } from "../../services/API/routes/common";
+import { useAuth } from "../../context/AuthContext";
 
 interface LoginData {
   email: string;
@@ -23,6 +27,9 @@ export default function OrganizationSignin() {
   });
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const Navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+
+  const { setUser } = useAuth();
 
   const validate = () => {
     const tempErrors: { [key: string]: string } = {};
@@ -32,19 +39,34 @@ export default function OrganizationSignin() {
     return Object.keys(tempErrors).length === 0;
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     if (validate()) {
-      // console.log("User Logged In", loginData);
-      Cookies.set(
-        "organisationToken",
-        "dcbjbvwsojvcjbdwivifbwrifurwiufwrgfbwruofgwiufgwif"
-      );
-      const loginInterval = setInterval(() => {
-        if (Cookies.get("organisationToken")) {
-          clearInterval(loginInterval);
-          Navigate("/organisation/dashboard");
+      try {
+        setLoading(true);
+        const response = await signin({
+          email: loginData.email,
+          password: loginData.password,
+          role: "organisation",
+        });
+        if (response.success) {
+          const { token, data } = response;
+          setUser(data);
+          Cookies.set("organisationToken", token);
+          const loginInterval = setInterval(() => {
+            console.log("running interval");
+            if (Cookies.get("organisationToken")) {
+              clearInterval(loginInterval);
+              Navigate("/organisation/dashboard");
+            }
+          }, 100);
         }
-      }, 100);
+      } catch (err) {
+        const errorMessage = returnErrorMessage(err);
+        enqueueSnackbar(errorMessage, { variant: "error" });
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
@@ -65,7 +87,7 @@ export default function OrganizationSignin() {
         <Typography variant="body1" sx={{ fontWeight: "medium" }}>
           Log in to your account and continue streamlining your hiring process.
         </Typography>
-        <Box component="form" sx={{ mt: 3 }}>
+        <Box component="form" sx={{ mt: 3 }} onSubmit={handleSubmit}>
           <Stack spacing={2}>
             <TextField
               fullWidth
@@ -91,10 +113,11 @@ export default function OrganizationSignin() {
               helperText={errors.password}
             />
             <Button
+              loading={loading}
               fullWidth
               variant="contained"
               color="primary"
-              onClick={handleSubmit}
+              type="submit"
             >
               Login
             </Button>

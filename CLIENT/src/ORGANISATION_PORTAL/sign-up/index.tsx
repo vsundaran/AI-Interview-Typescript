@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import {
   Container,
   TextField,
@@ -11,6 +11,11 @@ import {
 } from "@mui/material";
 import { Upload } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { register } from "../../services/API/routes/common";
+import Cookies from "js-cookie";
+import { returnErrorMessage } from "../../components/elementes/error";
+import { enqueueSnackbar } from "notistack";
+import { useAuth } from "../../context/AuthContext";
 
 interface Organization {
   companyName: string;
@@ -30,7 +35,8 @@ export default function OrganizationSignup() {
   });
   const [logoPreview, setLogoPreview] = useState<string | null>(null);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
-
+  const [loading, setLoading] = useState(false);
+  const { setUser } = useAuth();
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0];
@@ -52,9 +58,35 @@ export default function OrganizationSignup() {
     return Object.keys(tempErrors).length === 0;
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     if (validate()) {
-      console.log("Organization Registered", organization);
+      try {
+        setLoading(true);
+        const response = await register({
+          name: organization.companyName,
+          email: organization.companyEmail,
+          password: organization.password,
+          role: "organisation",
+        });
+        if (response.success) {
+          const { token, data } = response;
+          setUser(data);
+          Cookies.set("organisationToken", token);
+          const loginInterval = setInterval(() => {
+            console.log("running interval");
+            if (Cookies.get("organisationToken")) {
+              clearInterval(loginInterval);
+              Navigate("/organisation/dashboard");
+            }
+          }, 100);
+        }
+      } catch (err) {
+        const errorMessage = returnErrorMessage(err);
+        enqueueSnackbar(errorMessage, { variant: "error" });
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
@@ -77,7 +109,7 @@ export default function OrganizationSignup() {
           interviews to candidates and make informed hiring decisions - all in
           one place!
         </Typography>
-        <Box component="form" sx={{ mt: 3 }}>
+        <Box component="form" sx={{ mt: 3 }} onSubmit={handleSubmit}>
           <Stack spacing={2}>
             <input
               type="file"
@@ -168,10 +200,11 @@ export default function OrganizationSignup() {
             />
 
             <Button
+              type="submit"
+              loading={loading}
               fullWidth
               variant="contained"
               color="primary"
-              onClick={handleSubmit}
             >
               Register
             </Button>

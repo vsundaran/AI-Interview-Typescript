@@ -16,7 +16,6 @@ export const postData = async <T>(endpoint: string, data: unknown) => {
     const response = await axiosInstance.post<ApiResponse<T>>(endpoint, data);
     return response.data;
   } catch (error) {
-    console.log(error, "post data error")
     throw error as Error
   }
 };
