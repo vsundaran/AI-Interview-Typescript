@@ -38,6 +38,21 @@ axiosInstance.interceptors.request.use(
 axiosInstance.interceptors.response.use(
   (response: AxiosResponse) => response,
   (error) => {
+    if (error.response?.status === 401) {
+      // Clear authentication tokens
+      Cookies.remove("candidateToken");
+      Cookies.remove("organisationToken");
+
+      // Redirect user to the correct login page
+      const currentPath = window.location.pathname;
+      if (currentPath.startsWith("/candidate")) {
+        window.location.href = "/candidate/sign-in";
+      } else if (currentPath.startsWith("/organisation")) {
+        window.location.href = "/organisation/sign-in";
+      } else {
+        window.location.href = "/"; // Default to home page if no match
+      }
+    }
     return Promise.reject(error)
   }
 );

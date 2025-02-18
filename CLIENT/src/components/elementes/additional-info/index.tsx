@@ -39,11 +39,12 @@ export default function AdditionalInfo() {
           </Typography>
         </center>
         <Typography variant="body1" marginTop={2}>
-          We never store or share your data. The information you provide, such
-          as your name and last project details, is used solely to generate
-          interview questions tailored to your profile. Once the interview
-          session is complete, your data is not retained.
-          <br /> Feel confident and focus on your preparation! 🚀
+          Your Privacy, Our Commitment We securely store your data only for your
+          interview experience. Your information, including your name and
+          project details, is used exclusively to generate personalized
+          interview questions. Once your session ends, your data is managed
+          securely and never shared. Stay focused on your preparation—we've got
+          your privacy covered! 🚀
         </Typography>
       </Box>
       <Stack spacing={2}>
@@ -93,11 +94,6 @@ export default function AdditionalInfo() {
             onChange={(event) => handleUpdate(event, "jobDescription")}
           />
         </Box>
-        {/* <Box sx={{ display: "flex", justifyContent: "center" }}>
-                        <ColorButton sx={{ marginTop: 2 }} type="submit" variant="outlined">
-                            Start Interview
-                        </ColorButton>
-                    </Box> */}
       </Stack>
     </Box>
   );

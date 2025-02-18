@@ -73,16 +73,18 @@ export default function OrganisationHeader() {
       borderBottom={"1px solid #eaeaea"}
     >
       <Box display={"flex"} alignItems={"center"} gap={1}>
-        <IconButton
-          id="fade-button"
-          aria-controls={open ? "fade-menu" : undefined}
-          aria-haspopup="true"
-          aria-expanded={open ? "true" : undefined}
-          onClick={handleClick}
-          sx={{ display: { md: "none", xs: "flex" } }}
-        >
-          <List />
-        </IconButton>
+        {user ? (
+          <IconButton
+            id="fade-button"
+            aria-controls={open ? "fade-menu" : undefined}
+            aria-haspopup="true"
+            aria-expanded={open ? "true" : undefined}
+            onClick={handleClick}
+            sx={{ display: { md: "none", xs: "flex" } }}
+          >
+            <List />
+          </IconButton>
+        ) : null}
         <AppLogo sx={{ width: "auto" }} />
       </Box>
       {user ? (

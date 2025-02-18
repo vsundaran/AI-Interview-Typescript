@@ -3,22 +3,13 @@ import JobRole from "../models/organisation/JobRole.js";
 // Register User
 export const CreateJobRole = async (req, res) => {
     const {
-        userId,
         jobRole,
         experienced,
-        yearsOfExperience,
-        technology,
-        skills,
         targetCompanyName,
         salaryLevel,
-        degree,
-        education,
-        name,
-        lastProjectName,
-        interviewType,
-        jobDescriptionOrResume,
         role,
     } = req.body;
+
 
     if (!jobRole || !experienced || !targetCompanyName || !salaryLevel) {
         return res

@@ -1,6 +1,6 @@
 //MUI
 import Box from "@mui/material/Box";
-import { Stack, TextField } from "@mui/material";
+import { Stack, TextField, Tooltip } from "@mui/material";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -69,15 +69,17 @@ export default function JobInfo() {
           required={jobInfo?.experienced === "yes"}
           onChange={(event) => handleUpdate(event, "yearsOfExperience")}
         />
-        <TextField
-          value={jobInfo?.Technology || ""}
-          sx={{ marginTop: { md: 0, xs: 2 } }}
-          size="small"
-          fullWidth
-          label="Technolagy (optional)"
-          variant="standard"
-          onChange={(event) => handleUpdate(event, "Technology")}
-        />
+        <Tooltip title="Separate the technology list using commas (e.g., HTML, CSS, JS, etc.)">
+          <TextField
+            value={jobInfo?.Technology || ""}
+            sx={{ marginTop: { md: 0, xs: 2 } }}
+            size="small"
+            fullWidth
+            label="Technology (optional)"
+            variant="standard"
+            onChange={(event) => handleUpdate(event, "Technology")}
+          />
+        </Tooltip>
       </Box>
       <Box
         sx={{
@@ -86,15 +88,17 @@ export default function JobInfo() {
           margin: 0,
         }}
       >
-        <TextField
-          value={jobInfo?.skills || ""}
-          // sx={{ marginTop: { md: 0, xs: 2 } }}
-          size="small"
-          fullWidth
-          label="Skills (optional)"
-          variant="standard"
-          onChange={(event) => handleUpdate(event, "skills")}
-        />
+        <Tooltip title="Separate the skills list using commas (e.g., HTML, CSS, JS, etc.)">
+          <TextField
+            value={jobInfo?.skills || ""}
+            // sx={{ marginTop: { md: 0, xs: 2 } }}
+            size="small"
+            fullWidth
+            label="Skills (optional)"
+            variant="standard"
+            onChange={(event) => handleUpdate(event, "skills")}
+          />
+        </Tooltip>
       </Box>
       <Box
         sx={{
@@ -103,26 +107,30 @@ export default function JobInfo() {
           margin: 0,
         }}
       >
-        <TextField
-          value={jobInfo?.companyName || ""}
-          // sx={{ marginTop: { md: 0, xs: 2 } }}
-          size="small"
-          fullWidth
-          label="Company Name (Target company)"
-          variant="standard"
-          required
-          onChange={(event) => handleUpdate(event, "companyName")}
-        />
-        <TextField
-          value={jobInfo?.salaryLevel || ""}
-          sx={{ marginTop: { md: 0, xs: 2 } }}
-          size="small"
-          fullWidth
-          label="Salary Level"
-          variant="standard"
-          required
-          onChange={(event) => handleUpdate(event, "salaryLevel")}
-        />
+        <Tooltip title="Separate the company list using commas (e.g., HTML, CSS, JS, etc.)">
+          <TextField
+            value={jobInfo?.companyName || ""}
+            // sx={{ marginTop: { md: 0, xs: 2 } }}
+            size="small"
+            fullWidth
+            label="Company Name (Target company)"
+            variant="standard"
+            required
+            onChange={(event) => handleUpdate(event, "companyName")}
+          />
+        </Tooltip>
+        <Tooltip title="Enter your annual salary expectations (e.g., 10 LPA).">
+          <TextField
+            value={jobInfo?.salaryLevel || ""}
+            sx={{ marginTop: { md: 0, xs: 2 } }}
+            size="small"
+            fullWidth
+            label="Salary Level"
+            variant="standard"
+            required
+            onChange={(event) => handleUpdate(event, "salaryLevel")}
+          />
+        </Tooltip>
       </Box>
       <Box
         sx={{

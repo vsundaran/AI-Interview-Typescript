@@ -12,10 +12,22 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
 
   if (subRoute === "candidate") {
     const candidateToken = Cookies.get("candidateToken");
-    if (!candidateToken) return <Navigate to={"/candidate/sign-in"} />;
+    if (!candidateToken) {
+      return (
+        <Navigate to="/candidate/sign-in" replace state={{ from: location }} />
+      );
+    }
   } else if (subRoute === "organisation") {
     const organisationToken = Cookies.get("organisationToken");
-    if (!organisationToken) return <Navigate to={"/organisation/sign-in"} />;
+    if (!organisationToken) {
+      return (
+        <Navigate
+          to="/organisation/sign-in"
+          replace
+          state={{ from: location }}
+        />
+      );
+    }
   }
 
   return children;

@@ -8,26 +8,46 @@ export interface AuthResponse {
   user: UserData;
 }
 
+export interface CreateJobResponse {
+  success: boolean;
+  jobRole: CreateJob;
+}
+
 export interface UserResponse {
   success: boolean;
   user: UserData;
 }
 
-
-
 export type Signin = {
   email: string;
   password: string;
-  role:string;
+  role: string;
 };
 
 export type Register = {
   name: string;
   email: string;
   password: string;
-  role:string;
+  role: string;
 };
 
+export type CreateJob = {
+  userId: string;
+  jobRole: string;
+  experienced: string;
+  yearsOfExperience: string;
+  technology: string[];
+  skills: string[];
+  targetCompanyName: string[];
+  salaryLevel: string;
+  degree: string;
+  education: string;
+  name: string;
+  lastProjectName: string;
+  interviewType: string;
+  jobDescriptionOrResume: string;
+  role: string;
+};
 
 export type UserData = {
   _id: string;
@@ -45,9 +65,6 @@ export type UserData = {
 //     "updatedAt": "2025-02-18T00:22:48.754Z",
 //     "__v": 0
 // }
-
-
-
 
 // {
 //     "success": true,
