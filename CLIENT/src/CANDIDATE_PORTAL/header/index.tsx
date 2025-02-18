@@ -1,17 +1,39 @@
 // MUI Elements
 import { Avatar, Box, Fade, IconButton, Menu } from "@mui/material";
 import AppLogo from "../../components/elementes/app-logo";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { List } from "lucide-react";
 import CandidateSideNavList from "../candidate-side-nav-list";
 import { useAuth } from "../../context/AuthContext";
 import { APP_COLORS } from "../../theme/colors";
+import { fetchUserData } from "../../services/API/routes/common";
+import Cookies from "js-cookie";
 
 export default function CandidatesHeader() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
-  const { user } = useAuth();
+  const { user, setAuthLoading, setUser } = useAuth();
+
+  const getUserData = async () => {
+    try {
+      setAuthLoading(true);
+      if (!Cookies.get("candidateToken")) {
+        throw new Error("Unautherized user");
+      }
+      const response = await fetchUserData();
+
+      if (response.success && response.user) {
+        setUser(response.user);
+      } else {
+        setUser(null);
+      }
+    } catch (error) {
+      console.log((error as Error).message);
+    } finally {
+      setAuthLoading(false);
+    }
+  };
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -21,8 +43,14 @@ export default function CandidatesHeader() {
   };
 
   useEffect(() => {
-    console.log(user, "user");
-  }, [user]);
+    if (!user) {
+      //getting the user data
+      getUserData();
+    }
+
+    console.log("user data useEffect", user);
+    //eslint-disable-next-line
+  }, []);
 
   return (
     <Box

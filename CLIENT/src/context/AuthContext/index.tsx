@@ -10,6 +10,7 @@ import LogoutConfirmModal from "../../components/elementes/logout";
 import { useLocation, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { UserData } from "../../services/API/types";
+import { Loading } from "../../components/elementes/suspense-loading";
 
 // Define the type for the context value
 export interface AuthContextType {
@@ -75,12 +76,18 @@ const AuthContext = ({ children }: AuthContextProps) => {
         authLoading,
       }}
     >
-      {children}
-      <LogoutConfirmModal
-        open={logoutModalOpen}
-        onClose={closeLogoutModal}
-        onLogout={handleLogout}
-      />
+      {authLoading ? (
+        <Loading />
+      ) : (
+        <>
+          {children}
+          <LogoutConfirmModal
+            open={logoutModalOpen}
+            onClose={closeLogoutModal}
+            onLogout={handleLogout}
+          />
+        </>
+      )}
     </Auth.Provider>
   );
 };

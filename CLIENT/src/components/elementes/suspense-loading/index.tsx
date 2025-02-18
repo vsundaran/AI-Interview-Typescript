@@ -12,7 +12,7 @@ export const Loading = () => {
       justifyContent="center"
       sx={{ width: "100%", height: "calc(100vh - 100px)" }}
     >
-      <RotateLoader size={10} color={APP_COLORS.MEDIUM_GRAY} />
+      <RotateLoader size={10} color={APP_COLORS.PRIMARY} />
     </Box>
   );
 };

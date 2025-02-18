@@ -70,8 +70,8 @@ export default function OrganizationSignup() {
           role: "organisation",
         });
         if (response.success) {
-          const { token, data } = response;
-          setUser(data);
+          const { token, user } = response;
+          setUser(user);
           Cookies.set("organisationToken", token);
           const loginInterval = setInterval(() => {
             console.log("running interval");

@@ -1,13 +1,16 @@
 export interface AxiosApiResponse<T> {
   data: T;
-  status: number;
-  statusText: string;
 }
 
-export interface RegisterResponse {
-  success:boolean;
-  token:string;
-  user:UserData
+export interface AuthResponse {
+  success: boolean;
+  token: string;
+  user: UserData;
+}
+
+export interface UserResponse {
+  success: boolean;
+  user: UserData;
 }
 
 
@@ -32,6 +35,16 @@ export type UserData = {
   email: string;
   role: string;
 };
+
+// {
+//     "_id": "67b3d2d8d84ae08fa664e8e0",
+//     "name": "bumuzive",
+//     "email": "bumuzive@polkaroad.net",
+//     "role": "organisation",
+//     "createdAt": "2025-02-18T00:22:48.754Z",
+//     "updatedAt": "2025-02-18T00:22:48.754Z",
+//     "__v": 0
+// }
 
 
 

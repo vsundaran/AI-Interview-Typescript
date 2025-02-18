@@ -5,16 +5,19 @@ import { useNavigate } from "react-router-dom";
 import DashboardSideNavList from "../dashboard-side-nav-list";
 
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Menu from "@mui/material/Menu";
 import Fade from "@mui/material/Fade";
 
 import { List } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
+import { APP_COLORS } from "../../theme/colors";
+import { fetchUserData } from "../../services/API/routes/common";
+import Cookies from "js-cookie";
 
 export default function OrganisationHeader() {
   const Navigate = useNavigate();
-  const { user } = useAuth();
+  const { user, setAuthLoading, setUser } = useAuth();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -24,6 +27,36 @@ export default function OrganisationHeader() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const getUserData = async () => {
+    try {
+      setAuthLoading(true);
+      if (!Cookies.get("organisationToken")) {
+        throw new Error("Unautherized user");
+      }
+      const response = await fetchUserData();
+
+      if (response.success && response.user) {
+        setUser(response.user);
+      } else {
+        setUser(null);
+      }
+    } catch (error) {
+      console.log((error as Error).message);
+    } finally {
+      setAuthLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (!user) {
+      //getting the user data
+      getUserData();
+    }
+
+    console.log("user data useEffect", user);
+    //eslint-disable-next-line
+  }, []);
 
   return (
     <Box
@@ -73,10 +106,15 @@ export default function OrganisationHeader() {
               Create job
             </Button>
           </Box>
-          <Avatar
+          {/* <Avatar
             alt="User"
             src="https://media.licdn.com/dms/image/v2/D4D08AQE5GxVsMBA2vw/croft-frontend-shrinkToFit1024/croft-frontend-shrinkToFit1024/0/1636398674059?e=2147483647&v=beta&t=HNXXMj4_BJOtgI1SjdwaLthc1N1CzTqAs_AkCKTkK7I"
-          />
+          /> */}
+          {user ? (
+            <Avatar sx={{ background: APP_COLORS.PRIMARY }}>
+              {user.name.split("")?.[0].toUpperCase() || "A"}
+            </Avatar>
+          ) : null}
         </Box>
       ) : null}
 

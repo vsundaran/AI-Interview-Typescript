@@ -3,8 +3,8 @@ import {  AxiosApiResponse } from "./types";
 
 export const getData = async <T>(endpoint: string, params: Record<string, unknown> = {}) => {
   try {
-    const response = await axiosInstance.get<AxiosApiResponse<T>>(endpoint, { params });
-    return response;
+    const response = await axiosInstance.get<T>(endpoint, { params });
+    return response.data;
   } catch (error) {
     console.error("GET Error:", error);
     throw error;
