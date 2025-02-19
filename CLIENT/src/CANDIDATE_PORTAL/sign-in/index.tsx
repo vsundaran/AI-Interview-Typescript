@@ -8,7 +8,7 @@ import {
   Link,
   Stack,
 } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate as Nav, useLocation } from "react-router-dom";
 import Cookies from "js-cookie";
 import { signin } from "../../services/API/routes/common";
 import { enqueueSnackbar } from "notistack";
@@ -29,6 +29,7 @@ export default function CandidateSignin() {
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const Navigate = useNavigate();
   const { setUser } = useAuth();
+  const location = useLocation();
 
   const validate = () => {
     const tempErrors: { [key: string]: string } = {};
@@ -69,6 +70,11 @@ export default function CandidateSignin() {
       }
     }
   };
+
+  const token = Cookies.get("candidateToken");
+  if (token) {
+    return <Nav to="/candidate" replace state={{ from: location }} />;
+  }
 
   return (
     <center>

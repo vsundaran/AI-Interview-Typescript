@@ -8,7 +8,7 @@ import {
   Link,
   Stack,
 } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate as Nav, useLocation } from "react-router-dom";
 import Cookies from "js-cookie";
 import { enqueueSnackbar } from "notistack";
 import { returnErrorMessage } from "../../components/elementes/error";
@@ -28,8 +28,8 @@ export default function OrganizationSignin() {
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const Navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-
   const { setUser } = useAuth();
+  const location = useLocation();
 
   const validate = () => {
     const tempErrors: { [key: string]: string } = {};
@@ -40,7 +40,7 @@ export default function OrganizationSignin() {
   };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+    event?.preventDefault();
     if (validate()) {
       try {
         setLoading(true);
@@ -69,6 +69,11 @@ export default function OrganizationSignin() {
       }
     }
   };
+
+  const token = Cookies.get("organisationToken");
+  if (token) {
+    return <Nav to="/organisation" replace state={{ from: location }} />;
+  }
 
   return (
     <center>

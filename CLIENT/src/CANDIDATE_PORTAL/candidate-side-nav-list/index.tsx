@@ -18,7 +18,13 @@ import { Typography } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 
-export default function CandidateSideNavList() {
+type CandidateSideNavListProps = {
+  onClickCallBack?: () => void;
+};
+
+export default function CandidateSideNavList({
+  onClickCallBack = () => {},
+}: CandidateSideNavListProps) {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const { openLogoutModal } = useAuth();
 
@@ -36,6 +42,7 @@ export default function CandidateSideNavList() {
     } else {
       openLogoutModal();
     }
+    onClickCallBack();
   };
 
   useEffect(() => {

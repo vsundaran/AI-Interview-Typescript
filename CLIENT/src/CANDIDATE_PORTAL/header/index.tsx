@@ -101,13 +101,13 @@ export default function CandidatesHeader() {
         MenuListProps={{
           "aria-labelledby": "fade-button",
         }}
-        anchorEl={anchorEl}
         open={open}
+        anchorEl={anchorEl}
         onClose={handleClose}
         TransitionComponent={Fade}
       >
         <Box paddingX={2}>
-          <CandidateSideNavList />
+          <CandidateSideNavList onClickCallBack={handleClose} />
         </Box>
       </Menu>
     </Box>

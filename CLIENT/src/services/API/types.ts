@@ -13,6 +13,11 @@ export interface CreateJobResponse {
   jobRole: CreateJob;
 }
 
+export interface GetJobRolesResponse {
+  success: boolean;
+  jobRoles: CandidateInterview[];
+}
+
 export interface UserResponse {
   success: boolean;
   user: UserData;
@@ -55,6 +60,42 @@ export type UserData = {
   email: string;
   role: string;
 };
+
+export type CandidateInterview = {
+  id: number | string;
+  title: string;
+  status: string;
+  scores?: number | null;
+
+  userId?:string
+  jobRole?:string
+  yearsOfExperience?:string
+  experienced?:string
+  technology?:string[]
+  skills?:string[]
+  targetCompanyName?:string[]
+  salaryLevel?:string
+  degree?:string
+  education?:string
+  name?:string
+  lastProjectName?:string
+  interviewType?:string
+  role?:string
+  jobDescriptionOrResume?:string
+  createdAt?:string
+  updatedAt?:string
+  __v?:string
+};
+
+
+// "_id": "67b5cd6723caab5721c3dfd2",
+        
+//             "jobDescriptionOrResume": "",
+//             "role": "candidate",
+//             "status": "Interview",
+//             "createdAt": "2025-02-19T12:24:07.498Z",
+//             "updatedAt": "2025-02-19T12:24:07.498Z",
+//             "__v": 0
 
 // {
 //     "_id": "67b3d2d8d84ae08fa664e8e0",

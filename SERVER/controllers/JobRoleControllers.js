@@ -39,15 +39,23 @@ export const CreateJobRole = async (req, res) => {
 export const getAllJobRoles = async (req, res) => {
     try {
         const { userId } = req.params;
-        console.log(userId)
+        const { role } = req.query;
 
         if (!userId) {
-            return res.status(400).json({ success: false, message: "Organisation ID is required" });
+            return res.status(400).json({ success: false, message: "userId is required" });
         }
+        // Fetch job roles from the database
+        const jobRoles = await JobRole.find({ userId, role });
 
-        const jobRoles = await JobRole.find({ userId });
+        // Map the jobRoles to return only required fields
+        const filteredJobRoles = jobRoles.map(job => ({
+            id: job._id,
+            title: job.jobRole,
+            status: job.status,
+            scores: job.scores || null,
+        }));
 
-        res.status(200).json({ success: true, jobRoles });
+        res.status(200).json({ success: true, jobRoles: filteredJobRoles });
     } catch (error) {
         res.status(500).json({ success: false, message: "Server Error", error: error.message });
     }

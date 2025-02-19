@@ -33,25 +33,11 @@ export const job_info_slice = createSlice({
         state[key] = string;
       }
     },
-    resetFiled: (state) => {
-      state.jobRole = "";
-      state.experienced = "yes";
-      state.yearsOfExperience = "";
-      state.Technology = "";
-      state.skills = "";
-      state.companyName = "";
-      state.salaryLevel = "";
-      state.degree = "";
-      state.education = "";
-      state.name = "";
-      state.lastProjectName = "";
-      state.interviewType = "Tech";
-      state.jobDescription = "";
-    },
+    resetField: () => jobInfoStates,
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { updateField, resetFiled } = job_info_slice.actions;
+export const { updateField, resetField } = job_info_slice.actions;
 
 export default job_info_slice.reducer;

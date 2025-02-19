@@ -3,7 +3,7 @@ import SquareChart from "../bar-chart";
 
 export default function PerformanceChart() {
   return (
-    <Box padding={2} borderRadius={2} boxShadow={1}>
+    <Box padding={2} borderRadius={2} boxShadow={1} width={"100%"}>
       <Box>
         <Typography variant="body1">874</Typography>
         <Typography className="m-0" color="text.primary" variant="body1">

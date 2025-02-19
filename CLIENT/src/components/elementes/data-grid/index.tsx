@@ -8,7 +8,7 @@ import "jspdf-autotable";
 interface Row {
   id: number | string;
   title?: string;
-  scores?: number;
+  scores?: number | null;
   name?: string;
   status?: string;
 }

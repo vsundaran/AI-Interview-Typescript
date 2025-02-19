@@ -16,7 +16,7 @@ import { useAuth } from "../../context/AuthContext";
 import { createJob } from "../../services/API/routes/common";
 import { enqueueSnackbar } from "notistack";
 import { returnErrorMessage } from "../../components/elementes/error";
-import { resetFiled } from "../../redux/slice/job-info";
+import { resetField } from "../../redux/slice/job-info";
 
 export default function CandidateCreateJob() {
   //states and funcs
@@ -78,7 +78,7 @@ export default function CandidateCreateJob() {
       const response = await createJob({ ...API_PAYLOAD });
       if (response.success) {
         enqueueSnackbar("Job Created successfully", { variant: "success" });
-        DISPATCH(resetFiled());
+        DISPATCH(resetField());
       } else {
         throw new Error("Failed to create job");
       }

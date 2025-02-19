@@ -18,7 +18,7 @@ export default function DifficultGraph() {
     { name: "Page B", uv: 380, pv: 2900, amt: 9400 },
   ];
   return (
-    <Box padding={2} borderRadius={2} boxShadow={1}>
+    <Box padding={2} borderRadius={2} boxShadow={1} margin={0} width={"100%"}>
       <Box
         display={"flex"}
         justifyContent={"space-between"}
