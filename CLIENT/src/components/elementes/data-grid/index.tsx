@@ -13,13 +13,13 @@ interface Row {
   status?: string;
 }
 
-type JobsDataGridProps = {
+type DataGridProps = {
   rows: Row[];
   columns: GridColDef[];
   title: string;
 };
 
-const DataGridDownload = ({ rows, columns, title }: JobsDataGridProps) => {
+const DataGridDownload = ({ rows, columns, title }: DataGridProps) => {
   // Function to export data as Excel
   const exportToExcel = () => {
     const worksheet = XLSX.utils.json_to_sheet(rows);

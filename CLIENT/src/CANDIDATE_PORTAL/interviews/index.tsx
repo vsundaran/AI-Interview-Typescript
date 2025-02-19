@@ -1,9 +1,10 @@
-import { Box, Chip, IconButton, Typography } from "@mui/material";
+import { Box, Chip, IconButton, Tooltip, Typography } from "@mui/material";
 import JobsDataGrid from "../../components/elementes/data-grid";
 import { GridRenderCellParams } from "@mui/x-data-grid";
-import { Trash2 } from "lucide-react";
+import { Trash2, ExternalLink } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import * as React from "react";
 import { useEffect } from "react";
 import { getjobRoles } from "../../services/API/routes/common";
 import { CandidateInterview } from "../../services/API/types";
@@ -23,11 +24,11 @@ export default function CandidatesInterviews() {
   const columns = [
     { field: "id", headerName: "ID", flex: 1 },
     { field: "title", headerName: "Job Title", flex: 1 },
-    { field: "scores", headerName: "Scores", width: 180 },
+    { field: "scores", headerName: "Scores", flex: 1 },
     {
       field: "status",
       headerName: "Status",
-      width: 180,
+      flex: 1,
       renderCell: (params: GridRenderCellParams<CandidateInterview>) => (
         <Chip
           key={params.row.id}
@@ -39,15 +40,28 @@ export default function CandidatesInterviews() {
     {
       field: "actions",
       headerName: "Actions",
-      width: 150,
+      width: 100,
       renderCell: (params: GridRenderCellParams<CandidateInterview>) => (
-        <IconButton
-          key={params.row.id}
-          color="error"
-          // onClick={() => handleDeleteJob(params.row.id)}
-        >
-          <Trash2 size={18} />
-        </IconButton>
+        <React.Fragment>
+          <Box display={"flex"} gap={1} alignItems={"center"} mt={1}>
+            <Tooltip title="Attend Interview">
+              <IconButton
+                key={params.row.id}
+                color="info"
+                // onClick={() => handleDeleteJob(params.row.id)}
+              >
+                <ExternalLink size={18} />
+              </IconButton>
+            </Tooltip>
+            <IconButton
+              key={params.row.id}
+              color="error"
+              // onClick={() => handleDeleteJob(params.row.id)}
+            >
+              <Trash2 size={18} />
+            </IconButton>
+          </Box>
+        </React.Fragment>
       ),
     },
   ];
@@ -60,9 +74,7 @@ export default function CandidatesInterviews() {
         setCandidateInterviews({ candidateInterviews: response.jobRoles })
       );
     }
-    //  console.log(response, "response");
   };
-  console.log(candidateInterviews, "candidateInterviews");
 
   useEffect(() => {
     if (!candidateInterviews || !candidateInterviews.length) {

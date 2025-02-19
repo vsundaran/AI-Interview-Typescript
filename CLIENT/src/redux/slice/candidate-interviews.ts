@@ -23,8 +23,8 @@ export const candidate_interviews_slice = createSlice({
   reducers: {
     setCandidateInterviews: (_, action: PayloadAction<actionPayloads>) => {
       const { candidateInterviews } = action.payload;
-      // console.log(action.payload, "action.payload")
-      // console.log(candidateInterviews, "enters")
+      console.log(action.payload, "action.payload")
+      console.log(candidateInterviews, "enters")
       if (candidateInterviews && candidateInterviews.length) {
         // console.log(candidateInterviews, "candidateInterviews")
          return candidateInterviews

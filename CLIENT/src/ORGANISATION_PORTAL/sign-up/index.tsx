@@ -72,7 +72,7 @@ export default function OrganizationSignup() {
         if (response.success) {
           const { token, user } = response;
           setUser(user);
-          Cookies.set("organisationToken", token);
+          Cookies.set("organisationToken", token, { expires: 30 });
           const loginInterval = setInterval(() => {
             console.log("running interval");
             if (Cookies.get("organisationToken")) {

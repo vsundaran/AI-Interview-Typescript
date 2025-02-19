@@ -17,6 +17,7 @@ import { createJob } from "../../services/API/routes/common";
 import { enqueueSnackbar } from "notistack";
 import { returnErrorMessage } from "../../components/elementes/error";
 import { resetField } from "../../redux/slice/job-info";
+import { setCandidateInterviews } from "../../redux/slice/candidate-interviews";
 
 export default function CandidateCreateJob() {
   //states and funcs
@@ -70,7 +71,7 @@ export default function CandidateCreateJob() {
       interviewType: interviewType || "",
       jobDescriptionOrResume: jobDescription || "",
       role: user?.role || "",
-      status: "Interview",
+      status: "Pending",
     };
 
     try {
@@ -79,6 +80,11 @@ export default function CandidateCreateJob() {
       if (response.success) {
         enqueueSnackbar("Job Created successfully", { variant: "success" });
         DISPATCH(resetField());
+        DISPATCH(
+          setCandidateInterviews({
+            candidateInterviews: response.filteredJobRoles,
+          })
+        );
       } else {
         throw new Error("Failed to create job");
       }

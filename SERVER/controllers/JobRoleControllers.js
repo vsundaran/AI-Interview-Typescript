@@ -9,6 +9,7 @@ export const CreateJobRole = async (req, res) => {
         salaryLevel,
         role,
     } = req.body;
+    const { userId } = req.user
 
 
     if (!jobRole || !experienced || !targetCompanyName || !salaryLevel) {
@@ -25,10 +26,22 @@ export const CreateJobRole = async (req, res) => {
         ...req.body,
     });
 
+    const jobRoles = await JobRole.find({ userId, role });
+
+    // Map the jobRoles to return only required fields
+    const filteredJobRoles = jobRoles.map(job => ({
+        id: job._id,
+        title: job.jobRole,
+        status: job.status,
+        scores: job.scores || null,
+    }));
+
+
     if (jobRoleResponse) {
         res.status(201).json({
             success: true,
             jobRole: jobRoleResponse,
+            filteredJobRoles: filteredJobRoles
         });
     } else {
         res.status(400).json({ success: false, message: "Failed to create job role" });

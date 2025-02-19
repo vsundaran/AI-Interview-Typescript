@@ -11,6 +11,7 @@ export interface AuthResponse {
 export interface CreateJobResponse {
   success: boolean;
   jobRole: CreateJob;
+  filteredJobRoles:CreateJobDataGridRow[]
 }
 
 export interface GetJobRolesResponse {
@@ -62,6 +63,32 @@ export type UserData = {
 };
 
 export type CandidateInterview = {
+  id: number | string;
+  title: string;
+  status: string;
+  scores?: number | null;
+
+  userId?:string
+  jobRole?:string
+  yearsOfExperience?:string
+  experienced?:string
+  technology?:string[]
+  skills?:string[]
+  targetCompanyName?:string[]
+  salaryLevel?:string
+  degree?:string
+  education?:string
+  name?:string
+  lastProjectName?:string
+  interviewType?:string
+  role?:string
+  jobDescriptionOrResume?:string
+  createdAt?:string
+  updatedAt?:string
+  __v?:string
+};
+
+export type CreateJobDataGridRow = {
   id: number | string;
   title: string;
   status: string;

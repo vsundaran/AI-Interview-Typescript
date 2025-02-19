@@ -53,7 +53,7 @@ export default function CandidateSignin() {
         if (response.success) {
           const { token, user } = response;
           setUser(user);
-          Cookies.set("candidateToken", token);
+          Cookies.set("candidateToken", token, { expires: 30 });
           const loginInterval = setInterval(() => {
             console.log("running interval");
             if (Cookies.get("candidateToken")) {
