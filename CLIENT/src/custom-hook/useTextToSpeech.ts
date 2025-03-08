@@ -3,12 +3,6 @@ import { HfInference } from "@huggingface/inference";
 import { useDispatch } from "react-redux";
 import { updateLoading } from "../redux/slice/loading";
 import { enqueueSnackbar } from "notistack";
-// const HUGGING_FACE_API_KEY = import.meta.env.REACT_APP_HUGGING_FACE_API_KEY;
-// const HUGGING_FACE_API_KEY = import.meta.env.VITE_HUGGING_FACE_API_KEY;
-// const HUGGING_FACE_API_KEY = "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"
-// const HUGGING_FACE_API_KEY = "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"
-const HUGGING_FACE_API_KEY = "";
-
 /**
  * Custom hook for Text-to-Speech functionality using Hugging Face API.
  * @param {string} apiKey - Your Hugging Face API key.
