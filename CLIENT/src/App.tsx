@@ -51,6 +51,7 @@ const BodyLanguageAnalyzer = lazy(
 );
 
 function App() {
+  open router key needed
   return (
     <ThemeProvider theme={theme}>
       <SnackbarProvider
