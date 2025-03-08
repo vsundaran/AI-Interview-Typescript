@@ -10,6 +10,7 @@ import { getjobRoles } from "../../services/API/routes/common";
 import { CandidateInterview } from "../../services/API/types";
 import { useAuth } from "../../context/AuthContext";
 import { setCandidateInterviews } from "../../redux/slice/candidate-interviews";
+import { useNavigate } from "react-router-dom";
 
 export default function CandidatesInterviews() {
   const candidateInterviews = useSelector(
@@ -17,9 +18,16 @@ export default function CandidatesInterviews() {
   );
   const { user } = useAuth();
   const dispatch = useDispatch();
+  const Navigate = useNavigate();
   // const handleDeleteJob = (id: number) => {
   //   setJobs((prevJobs) => prevJobs.filter((job) => job.id !== id));
   // };
+
+  const openInterview = (id: string | number) => {
+    Navigate(`/candidate/attending-interview/${id}`, {
+      state: { triggerEvent: true },
+    });
+  };
 
   const columns = [
     { field: "id", headerName: "ID", flex: 1 },
@@ -48,7 +56,7 @@ export default function CandidatesInterviews() {
               <IconButton
                 key={params.row.id}
                 color="info"
-                // onClick={() => handleDeleteJob(params.row.id)}
+                onClick={() => openInterview(params.row.id)}
               >
                 <ExternalLink size={18} />
               </IconButton>

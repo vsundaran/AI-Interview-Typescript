@@ -8,6 +8,7 @@ import { useAuth } from "../../context/AuthContext";
 import { APP_COLORS } from "../../theme/colors";
 import { fetchUserData } from "../../services/API/routes/common";
 import Cookies from "js-cookie";
+import { enqueueSnackbar } from "notistack";
 
 export default function CandidatesHeader() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -32,6 +33,7 @@ export default function CandidatesHeader() {
       }
     } catch (error) {
       console.log((error as Error).message);
+      enqueueSnackbar((error as Error).message, { variant: "error" });
     } finally {
       setAuthLoading(false);
     }
@@ -50,7 +52,6 @@ export default function CandidatesHeader() {
       getUserData();
     }
 
-    console.log("user data useEffect", user);
     //eslint-disable-next-line
   }, []);
 

@@ -73,3 +73,20 @@ export const getAllJobRoles = async (req, res) => {
         res.status(500).json({ success: false, message: "Server Error", error: error.message });
     }
 };
+
+export const getJobRole = async (req, res) => {
+    try {
+        const { _id } = req.params;
+        const { userId, role } = req.query;
+
+        if (!userId) {
+            return res.status(400).json({ success: false, message: "userId is required" });
+        }
+        // Fetch job roles from the database
+        const jobRole = await JobRole.findOne({ _id, userId, role });
+
+        res.status(200).json({ success: true, jobRole });
+    } catch (error) {
+        res.status(500).json({ success: false, message: "Server Error", error: error.message });
+    }
+};

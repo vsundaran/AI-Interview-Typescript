@@ -1,5 +1,5 @@
 import { getData, postData } from "../../apiService";
-import { AuthResponse,  CreateJob,  CreateJobResponse,  GetJobRolesResponse,  Register,  Signin,  UserResponse } from "../../types";
+import { AuthResponse,  CreateJob,  CreateJobResponse,  GetJobRoleResponse,  GetJobRolesResponse,  Register,  Signin,  UserResponse } from "../../types";
 
 export const signin = async (data: Signin) => {
   try {
@@ -40,6 +40,15 @@ export const createJob = async (data: CreateJob) => {
 export const getjobRoles = async (userId:string, role:string) => {
   try {
     const postResponse = await getData<GetJobRolesResponse>(`api/jobroles/job-roles/${userId}?role=${role}`)
+    return postResponse;
+  } catch (err) {
+    throw err as Error
+  }
+};
+
+export const getJobRoleByID = async (jobRoleID:string, userId:string, role:string) => {
+  try {
+    const postResponse = await getData<GetJobRoleResponse>(`api/jobroles/get-job-role/${jobRoleID}?userId=${userId}&&role=${role}`)
     return postResponse;
   } catch (err) {
     throw err as Error

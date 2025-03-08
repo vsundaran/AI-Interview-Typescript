@@ -49,9 +49,8 @@ export default function CandidateSideNavList({
     const URL = location.pathname;
     switch (URL) {
       case "/candidate/dashboard":
-        setSelectedIndex(0);
-        break;
       case "/candidate":
+      case "/candidate/":
         setSelectedIndex(0);
         break;
       case "/candidate/create-job":
