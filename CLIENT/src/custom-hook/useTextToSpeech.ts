@@ -3,16 +3,6 @@ import { HfInference } from "@huggingface/inference";
 import { useDispatch } from "react-redux";
 import { updateLoading } from "../redux/slice/loading";
 import { enqueueSnackbar } from "notistack";
-/**
- * Custom hook for Text-to-Speech functionality using Hugging Face API.
- * @param {string} apiKey - Your Hugging Face API key.
- * @param {string} model - The Hugging Face model to use for TTS (default: 'facebook/fastspeech2-en-ljspeech').
- * @returns {{
- *   speak: (text: string) => Promise<void>,
- *   isLoading: boolean,
- *   error: string | null
- * }}
- */
 
 const useTextToSpeech = (model = "facebook/fastspeech2-en-ljspeech") => {
   const [isLoading, setIsLoading] = useState(false);
